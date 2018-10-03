@@ -16,9 +16,8 @@ finity differencign.  Leverage the cores on the computer and is MPI ready.
 Current build status
 ====================
 
-[![Linux](https://img.shields.io/circleci/project/github/conda-forge/distarray-feedstock/master.svg?label=Linux)](https://circleci.com/gh/conda-forge/distarray-feedstock)
-[![OSX](https://img.shields.io/travis/conda-forge/distarray-feedstock/master.svg?label=macOS)](https://travis-ci.org/conda-forge/distarray-feedstock)
-![Windows disabled](https://img.shields.io/badge/Windows-disabled-lightgrey.svg)
+All platforms:
+[![noarch](https://img.shields.io/circleci/project/github/conda-forge/distarray-feedstock/master.svg?label=noarch)](https://circleci.com/gh/conda-forge/distarray-feedstock)
 
 Current release info
 ====================
