@@ -1,23 +1,22 @@
-{% set name = "distarray" %}
 {% set version = "2.12.2" %}
 
 package:
-  name: {{ name|lower }}
+  name: distarray
   version: {{ version }}
 
 source:
-  url: https://github.com/UV-CDAT/distarray/archive/2.12.2.tar.gz
+  url: https://github.com/UV-CDAT/distarray/archive/{{ version }}.tar.gz
   sha256: ca6ee7610b8e8309cec47121b2454d8d318bfe37b6db3b950c65b1316035ba6c
 
 build:
-  number: 1000
-  skip: True  # [win]
+  number: 1
+  noarch: python
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
 
 requirements:
-  build:
+  host:
     - python
-    - setuptools
-    - future
+    - pip
   run:
     - python
     - future
