@@ -1,17 +1,17 @@
 diff -ruN distarray-2.12.2/Lib/__init__.py distarray-2.12.2-patch/Lib/__init__.py
---- Lib/__init__.py	2017-09-22 22:37:58.000000000 +0200
-+++ Lib/__init__.py	2021-06-09 11:33:03.351416202 +0200
+--- distarray-2.12.2/Lib/__init__.py	2017-09-22 22:37:58.000000000 +0200
++++ distarray-2.12.2-patch/Lib/__init__.py	2021-06-09 11:33:03.351416202 +0200
 @@ -2,11 +2,18 @@
  Distributed array
  """
  __all__ = ["mvMultiArrayIter"]
--from .mvMultiArrayIter import MultiArrayIter
+-from .mvMultiArrayIter import MultiArrayIter 
 +from .mvMultiArrayIter import MultiArrayIter
 +
 +import os
 +
 +mpi_disabled = os.environ.get("CDMS_NO_MPI", "False").lower() == 'true'
-
+ 
  # is mpi4py available?
  hasMpi4py = True
  try:
