@@ -12,7 +12,7 @@ source:
     - 0002-remove-numpy-float.patch
 
 build:
-  number: 3
+  number: 4
   noarch: python
   script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
 
@@ -24,17 +24,21 @@ requirements:
     - python >=3.6
     - future
 test:
-    imports:
-     - distarray
+  requires:
+    - mpich
+    - mpi4py
+    - numpy
+  imports:
+    - distarray
 
 about:
   home: http://cdat.llnl.gov/
   license: BSD-3-Clause
   license_file: 'license.txt'
-  summary: 'Big Array partitionned in sub arrays'
+  summary: 'Big Array partitioned in sub arrays'
   description: |
-      Divide work among proceses for ensemble runs, linear interpolation,
-      finity differencign.  Leverage the cores on the computer and is MPI ready.
+      Divide work among processes for ensemble runs, linear interpolation,
+      finite differencing.  Leverage the cores on the computer and is MPI ready.
   dev_url: https://github.com/CDAT/distarray
 
 extra:

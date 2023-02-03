@@ -1,6 +1,6 @@
 diff -ruN distarray-2.12.2/Lib/mvDistArray.py distarray-2.12.2-patch/Lib/mvDistArray.py
 --- distarray-2.12.2/Lib/mvDistArray.py	2017-09-22 14:37:58.000000000 -0600
-+++ distarray-2.12.2-patch/Lib/mvDistArray.py	2023-02-02 21:20:33.741752039 -0700
++++ distarray-2.12.2-patch/Lib/mvDistArray.py	2023-02-02 22:48:19.672633735 -0700
 @@ -3,7 +3,7 @@
  """
  Distributed array class
@@ -10,7 +10,7 @@ diff -ruN distarray-2.12.2/Lib/mvDistArray.py distarray-2.12.2-patch/Lib/mvDistA
  No guarantee is provided whatsoever. Use at your own risk.
  
  Alex Pletzer, Tech-X Corp. (2012)
-@@ -28,11 +28,11 @@
+@@ -28,21 +28,21 @@
      res[:] = a # copy
      return res
  
@@ -24,7 +24,10 @@ diff -ruN distarray-2.12.2/Lib/mvDistArray.py distarray-2.12.2-patch/Lib/mvDistA
      """
      res = DistArray(shape, dtype)
      res[:] = numpy.zeros(shape, dtype)
-@@ -42,7 +42,7 @@
+     return res
+ 
+-def daOnes(shape, dtype=numpy.float):
++def daOnes(shape, dtype=float):
      """
      One constructor
      @param shape the shape of the array
@@ -81,3 +84,108 @@ diff -ruN distarray-2.12.2/Lib/mvDistArray.py distarray-2.12.2-patch/Lib/mvDistA
              print('[%d] daLocalEast=%s\ndaOtherEast=%s' % (rk, str(daLocalEast), str(daOtherEast)))
              print('error: ', numpy.sum( diff - 100 ))
      else:
+diff -ruN distarray-2.12.2/Lib/mvGhostedDistArray.py distarray-2.12.2-patch/Lib/mvGhostedDistArray.py
+--- distarray-2.12.2/Lib/mvGhostedDistArray.py	2017-09-22 14:37:58.000000000 -0600
++++ distarray-2.12.2-patch/Lib/mvGhostedDistArray.py	2023-02-02 22:48:46.532789269 -0700
+@@ -3,7 +3,7 @@
+ """
+ Distributed array class with ghosts
+ 
+-This code is provided with the hope that it will be useful. 
++This code is provided with the hope that it will be useful.
+ No guarantee is provided whatsoever. Use at your own risk.
+ 
+ Alex Pletzer, Tech-X Corp. (2012)
+@@ -26,18 +26,18 @@
+     res[:] = a # copy
+     return res
+ 
+-def ghZeros(shape, dtype=numpy.float, ghostWidth=1):
++def ghZeros(shape, dtype=float, ghostWidth=1):
+     """
+     ghosted distributed array zero constructor
+     @param shape the shape of the array
+-    @param dtype the numpy ghta type 
++    @param dtype the numpy ghta type
+     @param ghostWidth the number of ghosts (>= 0)
+     """
+     res = GhostedDistArray(shape, dtype)
+     res[:] = numpy.zeros(shape, dtype)
+     return res
+ 
+-def ghOnes(shape, dtype=numpy.float, ghostWidth=1):
++def ghOnes(shape, dtype=float, ghostWidth=1):
+     """
+     ghosted distributed array one constructor
+     @param shape the shape of the array
+@@ -51,8 +51,8 @@
+ class GhostedDistArray(DistArray):
+ 
+     """
+-    Ghosted distributed array. Each process owns data and exposes the 
+-    halo region to other processes. These are accessed with tuples 
++    Ghosted distributed array. Each process owns data and exposes the
++    halo region to other processes. These are accessed with tuples
+     such (1, 0) for north, (-1, 0) for south, etc.
+     """
+ 
+@@ -61,7 +61,7 @@
+         Constructor
+         @param shape shape of the array
+         @param dtyp numpy data type
+-        @param ghostWidth the width of the halo 
++        @param ghostWidth the width of the halo
+         """
+         # call the parent Ctor
+         DistArray.__init__(self, shape, dtyp)
+@@ -79,13 +79,13 @@
+                 winId = tuple( [0 for i in range(dim) ] \
+                                + [drect] + \
+                                [0 for i in range(dim+1, ndim) ] )
+-                
++
+                 slce = slice(0, ghostWidth)
+                 if drect == 1:
+                     slce = slice(shape[dim] - ghostWidth, shape[dim])
+-        
++
+                 slab = self.getSlab(dim, slce)
+-                
++
+                 # expose MPI window
+                 self.expose(slab, winId)
+ 
+@@ -99,14 +99,14 @@
+         """
+         shape = self.shape
+         ndim = len(shape)
+-        
++
+         slab = [ slice(0, shape[i]) for i in range(dim) ] \
+                     + [slce] + \
+                   [ slice(0, shape[i]) for i in range(dim+1, ndim) ]
+         return slab
+ 
+ ######################################################################
+-    
++
+ def test():
+ 
+     from mpi4py import MPI
+@@ -122,14 +122,14 @@
+                          (n,m))
+ 
+     # create dist array
+-    
++
+     da = GhostedDistArray(data.shape, data.dtype)
+ 
+     # load the data on each PE
+     da[:] = data
+     print(da)
+ 
+-    # this shows how one can access slabs 
++    # this shows how one can access slabs
+     for pe in range(sz):
+         winIndex = (-1, 0)
+         print('[%d] %s slab belonging to %d is: \n' % (rk, str(winIndex), pe), \
