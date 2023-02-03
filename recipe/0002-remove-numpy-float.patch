@@ -1,0 +1,83 @@
+diff -ruN distarray-2.12.2/Lib/mvDistArray.py distarray-2.12.2-patch/Lib/mvDistArray.py
+--- distarray-2.12.2/Lib/mvDistArray.py	2017-09-22 14:37:58.000000000 -0600
++++ distarray-2.12.2-patch/Lib/mvDistArray.py	2023-02-02 21:20:33.741752039 -0700
+@@ -3,7 +3,7 @@
+ """
+ Distributed array class
+ 
+-This code is provided with the hope that it will be useful. 
++This code is provided with the hope that it will be useful.
+ No guarantee is provided whatsoever. Use at your own risk.
+ 
+ Alex Pletzer, Tech-X Corp. (2012)
+@@ -28,11 +28,11 @@
+     res[:] = a # copy
+     return res
+ 
+-def daZeros(shape, dtype=numpy.float):
++def daZeros(shape, dtype=float):
+     """
+     Zero constructor
+     @param shape the shape of the array
+-    @param dtype the numpy data type 
++    @param dtype the numpy data type
+     """
+     res = DistArray(shape, dtype)
+     res[:] = numpy.zeros(shape, dtype)
+@@ -42,7 +42,7 @@
+     """
+     One constructor
+     @param shape the shape of the array
+-    @param dtype the numpy data type 
++    @param dtype the numpy data type
+     """
+     res = DistArray(shape, dtype)
+     res[:] = numpy.zeros(shape, dtype)
+@@ -51,9 +51,9 @@
+ class DistArray(numpy.ndarray):
+ 
+     """
+-    Distributed array. Each process owns data and can expose a subset 
+-    of the data to other processes. These are known as windows. Any 
+-    number of windows can be exposed and the data of windows can be 
++    Distributed array. Each process owns data and can expose a subset
++    of the data to other processes. These are known as windows. Any
++    number of windows can be exposed and the data of windows can be
+     overlapping. Any process can access exposed windows from any other
+     process. This relies on MPI-2 one-sided get communication.
+     """
+@@ -106,7 +106,7 @@
+         @param winID the data window ID
+         """
+         # buffer for source data
+-        dataSrc = numpy.ones(self[slce].shape, self.dtyp) 
++        dataSrc = numpy.ones(self[slce].shape, self.dtyp)
+         # buffer for destination data
+         dataDst = numpy.ones(self[slce].shape, self.dtyp)
+         self.windows[winID] = {
+@@ -152,14 +152,14 @@
+     comm = MPI.COMM_WORLD
+     rk = comm.Get_rank()
+     sz = comm.Get_size()
+-    
++
+     # create local data container
+     n, m = 3, 4
+     data = numpy.reshape(numpy.array( [rk*100.0 + i for i in range(n*m) ] ), (n,m))
+ 
+     # create dist array
+     da = DistArray(data.shape, data.dtype)
+-    
++
+     # load the data
+     da[:] = data
+ 
+@@ -179,7 +179,7 @@
+         try:
+             assert( numpy.all( diff == 100 ) )
+             print('[%d]...OK' % rk)
+-        except: 
++        except:
+             print('[%d] daLocalEast=%s\ndaOtherEast=%s' % (rk, str(daLocalEast), str(daOtherEast)))
+             print('error: ', numpy.sum( diff - 100 ))
+     else:

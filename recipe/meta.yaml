@@ -9,9 +9,10 @@ source:
   sha256: ca6ee7610b8e8309cec47121b2454d8d318bfe37b6db3b950c65b1316035ba6c
   patches:
     - 0001-add-env-flag-to-disable-mpi4py.patch
+    - 0002-remove-numpy-float.patch
 
 build:
-  number: 2
+  number: 3
   noarch: python
   script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
 
