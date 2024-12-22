@@ -1,18 +1,18 @@
-About distarray
-===============
+About distarray-feedstock
+=========================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/distarray-feedstock/blob/main/LICENSE.txt)
 
 Home: http://cdat.llnl.gov/
 
 Package license: BSD-3-Clause
 
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/distarray-feedstock/blob/main/LICENSE.txt)
-
-Summary: Big Array partitionned in sub arrays
+Summary: Big Array partitioned in sub arrays
 
 Development: https://github.com/CDAT/distarray
 
-Divide work among proceses for ensemble runs, linear interpolation,
-finity differencign.  Leverage the cores on the computer and is MPI ready.
+Divide work among processes for ensemble runs, linear interpolation,
+finite differencing.  Leverage the cores on the computer and is MPI ready.
 
 
 Current build status
@@ -101,7 +101,7 @@ available continuous integration services. Thanks to the awesome service provide
 [CircleCI](https://circleci.com/), [AppVeyor](https://www.appveyor.com/),
 [Drone](https://cloud.drone.io/welcome), and [TravisCI](https://travis-ci.com/)
 it is possible to build and upload installable packages to the
-[conda-forge](https://anaconda.org/conda-forge) [Anaconda-Cloud](https://anaconda.org/)
+[conda-forge](https://anaconda.org/conda-forge) [anaconda.org](https://anaconda.org/)
 channel for Linux, Windows and OSX respectively.
 
 To manage the continuous integration and simplify feedstock maintenance

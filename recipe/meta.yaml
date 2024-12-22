@@ -12,24 +12,29 @@ source:
     - 0002-remove-numpy-float.patch
 
 build:
-  number: 4
+  number: 5
   noarch: python
   script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
 
 requirements:
   host:
-    - python >=3.6
+    - python {{ python_min }}
     - pip
+    - setuptools
   run:
-    - python >=3.6
+    - python >={{ python_min }}
     - future
 test:
   requires:
+    - python {{ python_min }}
     - mpich
     - mpi4py
     - numpy
+    - pip
   imports:
     - distarray
+  commands:
+    - pip check
 
 about:
   home: http://cdat.llnl.gov/
