@@ -33,7 +33,7 @@ test:
     - pip
   imports:
     - distarray
-  command:
+  commands:
     - pip check
 
 about:
